@@ -1,0 +1,89 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Gaji</title>
+    <style>
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .table-custom th, .table-custom td {
+            border: 2px solid #444444;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .table-custom th {
+            background-color: #333333;
+            color: #ffffff;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .table-custom tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table-custom tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .table-custom .total-row {
+            background-color: #cce5ff;
+            font-weight: bold;
+        }
+
+        .table-custom .total-row td {
+            border-top: 3px solid #444444;
+        }
+
+        .table-custom .text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Tahun Pelajaran</th>
+                        <th scope="col">Bulan</th>
+                        <th scope="col">Nama Guru</th>
+                        <th scope="col" class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ row.tahun_pelajaran__nama }}</td>
+                        <td>{{ row.month_name }}</td>
+                        <td>{{ row.guru__nama_guru }}</td>
+                        <td class="text-right">Rp. {{ row.total_nominal|intcomma }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" align="center">Data Tidak Tersedia</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="total-row">
+                        <td colspan="4" class="text-right"><strong>Total Keseluruhan:</strong></td>
+                        <td class="text-right"><strong>Rp. {{ total_keseluruhan|intcomma }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

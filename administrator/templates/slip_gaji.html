@@ -1,0 +1,88 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slip Gaji</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            margin: 0;
+        }
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .table-custom th, .table-custom td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .table-custom th {
+            background-color: #f2f2f2;
+            text-transform: uppercase;
+        }
+        .table-custom .text-right {
+            text-align: right;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Slip Gaji</h2>
+        <p>Bulan: {{ bulan }}</p>
+        <p>Nama Guru: {{ guru.nama_guru }}</p>
+        {% if tahun_pelajaran %}
+        <p>Tahun Pelajaran: {{ tahun_pelajaran.nama }}</p>
+        {% endif %}
+    </div>
+
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Jam Pelajaran</th>
+                <th class="text-right">Nominal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in detail_gaji %}
+            <tr>
+                <td>{{ item.tanggal|date:"d M Y" }}</td>
+                <td>{{ item.jam_pelajaran }}</td>
+                <td class="text-right">Rp. {{ item.nominal|intcomma }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="2" align="center"><strong>Total</strong></td>
+                <td class="text-right"><strong>Rp. {{ total_nominal|intcomma }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>Slip ini dicetak secara otomatis dan sah tanpa tanda tangan.</p>
+    </div>
+</div>
+
+</body>
+</html>
